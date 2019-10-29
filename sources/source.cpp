@@ -1,7 +1,6 @@
 // Copyright 2018 Your Name <your_email>
 
 #include <header.hpp>
-#include "library.h"
 
 double Json::parse_number(const std::string &number, size_t &pos) const {
     std::string res;
@@ -48,7 +47,8 @@ void Json::skip(const std::string str, size_t &pos) {
     while (isspace(str[pos])) pos++;
 }
 
-std::vector<std::any> Json::parse_array(const std::string &str, size_t &pos) {
+std::vector<std::any>
+		      Json::parse_array(const std::string &str, size_t &pos) {
     std::vector<std::any> res;
     auto state = Act::find_value;
     for (size_t i = pos; str[i] < str.length(); i++) {
@@ -84,7 +84,8 @@ std::vector<std::any> Json::parse_array(const std::string &str, size_t &pos) {
                 state = Act::find_value;
             }// else throw std::bad_any_cast();
         } else if (isdigit(str[i]) || isalpha(str[i])) {
-            if (str[i] == '+' && isdigit(str[i + 1]) != 0 || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
+            if (str[i] == '+' && isdigit(str[i + 1]) != 0
+	     || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res.emplace_back(parse_number(str, i));
@@ -101,7 +102,8 @@ std::vector<std::any> Json::parse_array(const std::string &str, size_t &pos) {
     }
 }
 
-std::map<std::string, std::any> Json::parse_object(const std::string &str, size_t &pos) {
+std::map<std::string, std::any>
+				 Json::parse_object(const std::string &str, size_t &pos) {
     std::map<std::string, std::any> res;
     auto state = Act::find_key_or_end;
     std::string key;
@@ -150,7 +152,8 @@ std::map<std::string, std::any> Json::parse_object(const std::string &str, size_
                 state = Act::find_value;
             } //else throw std::bad_any_cast();
         } else if (isdigit(str[i]) || isalpha(str[i])) {
-            if (str[i] == '+' && isdigit(str[i + 1]) != 0 || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
+            if (str[i] == '+' && isdigit(str[i + 1]) != 0
+	     || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res[key] = parse_number(str, i);
@@ -172,10 +175,12 @@ Json::Json(const std::string &s) {
     for (size_t i = 0; s[i] != '\0'; i++) {
         if (s[i] == '{') {
             i++;
-            _data = std::any_cast<std::map<std::string, std::any>>(parse_object(s, i));
+            _data =
+ 		    std::any_cast<std::map<std::string, std::any>>(parse_object(s, i));
         } else if (s[i] == '[') {
             i++;
-            _data = std::any_cast<std::vector<std::any>>(parse_array(s, i));
+            _data =
+		    std::any_cast<std::vector<std::any>>(parse_array(s, i));
         } else if (!isspace(s[i])) {
             throw std::bad_any_cast();
         }
@@ -184,11 +189,13 @@ Json::Json(const std::string &s) {
 };
 
 bool Json::is_array() const {
-    if (this->_data.type() != typeid(std::vector<std::any>)) return false;
+    if (this->_data.type() !=
+			      typeid(std::vector<std::any>)) return false;
     return true;
 }
 
 bool Json::is_object() const {
-    if (this->_data.type() != typeid(std::map<std::string, std::any>)) return false;
+    if (this->_data.type() !=
+			      typeid(std::map<std::string, std::any>)) return false;
     return true;
 }

@@ -1,5 +1,5 @@
-#ifndef JSON_LIBRARY_H
-#define JSON_LIBRARY_H
+#ifndef INCLUDE_HEADER_HPP_
+#define INCLUDE_HEADER_HPP_
 
 #include <iostream>
 #include <string>
@@ -17,7 +17,7 @@ private:
         find_value,
         find_key_or_end,
         find_comma_or_end
-    };
+    }
 
     double parse_number(const std::string &number, size_t &pos) const;
 
@@ -29,17 +29,18 @@ private:
 
     std::vector<std::any> parse_array(const std::string &str, size_t &pos);
 
-    std::map<std::string, std::any> parse_object(const std::string &str, size_t &pos);
+    std::map<std::string, std::any>
+				    parse_object(const std::string &str, size_t &pos);
 
 public:
     // Конструктор из строки, содержащей Json-данные.
     Json(const std::string &s);
 
-    Json() {};
+    Json() {}
 
-    Json(const std::vector<std::any> &array) : _data(array) {};
+    Json(const std::vector<std::any> &array) : _data(array) {}
 
-    Json(const std::map<std::string, std::any> &object) : _data(object) {};
+    Json(const std::map<std::string, std::any> &object) : _data(object) {}
 
     // Метод возвращает true, если данный экземпляр содержит в себе JSON-массив. Иначе false.
     bool is_array() const;
@@ -52,24 +53,26 @@ public:
     // Если экземпляр является JSON-массивом, генерируется исключение.
     std::any &operator[](const std::string &key) {
         if (this->is_object()) {
-            auto &data = std::any_cast<std::map<std::string, std::any> &>(_data);
+            auto &data =
+			 std::any_cast<std::map<std::string, std::any> &>(_data);
             return data[key];
         } else if (this->is_array()) {
             std::cout << "f";
         }
-    };
+    }
 
     // Метод возвращает значение по индексу index, если экземпляр является JSON-массивом.
     // Значение может иметь один из следующих типов: Json, std::string, double, bool или быть пустым.
     // Если экземпляр является JSON-объектом, генерируется исключение.
     std::any &operator[](int index) {
         if (this->is_array()) {
-            auto &data = std::any_cast<std::vector<std::any> &>(_data);
+            auto &data =
+			 std::any_cast<std::vector<std::any> &>(_data);
             return data[index];
         } else if (this->is_object()) {
             throw std::bad_any_cast();
         }
-    };
+    }
 
     // Метод возвращает объект класса Json из строки, содержащей Json-данные.
     static Json parse(const std::string &s) {
@@ -78,7 +81,7 @@ public:
         }catch(std::bad_any_cast()){
             std::cout << "Error";
         }
-    };
+    }
 
     // Метод возвращает объекта класса Json из файла, содержащего Json-данные в текстовом формате.
     static Json parseFile(const std::string &path_to_file) {
@@ -87,10 +90,10 @@ public:
         ss << f.rdbuf();
         std::cout << ss.str();
         return Json(ss.str());
-    };
+    }
 
 private:
     std::any _data;
-};
+}
 
-#endif //JSON_LIBRARY_H
+#endif // INCLUDE_HEADER_HPP_
