@@ -48,7 +48,7 @@ void Json::skip(const std::string str, size_t &pos) {
 }
 
 std::vector<std::any>
-		      Json::parse_array(const std::string &str, size_t &pos) {
+Json::parse_array(const std::string &str, size_t &pos) {
     std::vector<std::any> res;
     auto state = Act::find_value;
     for (size_t i = pos; str[i] < str.length(); i++) {
@@ -103,7 +103,7 @@ std::vector<std::any>
 }
 
 std::map<std::string, std::any>
-				 Json::parse_object(const std::string &str, size_t &pos) {
+Json::parse_object(const std::string &str, size_t &pos) {
     std::map<std::string, std::any> res;
     auto state = Act::find_key_or_end;
     std::string key;
@@ -176,26 +176,25 @@ Json::Json(const std::string &s) {
         if (s[i] == '{') {
             i++;
             _data =
- 		    std::any_cast<std::map<std::string, std::any>>(parse_object(s, i));
+	            std::any_cast<std::map<std::string, std::any>>(parse_object(s, i));
         } else if (s[i] == '[') {
             i++;
-            _data =
-		    std::any_cast<std::vector<std::any>>(parse_array(s, i));
+            _data = 
+	            std::any_cast<std::vector<std::any>>(parse_array(s, i));
         } else if (!isspace(s[i])) {
             throw std::bad_any_cast();
         }
     }
-
-};
+}
 
 bool Json::is_array() const {
     if (this->_data.type() !=
-			      typeid(std::vector<std::any>)) return false;
-    return true;
-}
+                              typeid(std::vector<std::any>)) return false;
+			      return true;
+			      }
 
 bool Json::is_object() const {
-    if (this->_data.type() !=
-			      typeid(std::map<std::string, std::any>)) return false;
-    return true;
-}
+    if (this->_data.type() != 
+                              typeid(std::map<std::string, std::any>)) return false;
+			      return true;
+			      }
