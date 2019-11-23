@@ -30,9 +30,9 @@ private:
     std::vector<std::any> parse_array(const std::string &str, size_t &pos);
 
     std::map<std::string, std::any>
-	    parse_object(const std::string &str, size_t &pos);
-	
-	public:
+            parse_object(const std::string &str, size_t &pos);
+
+public:
     // Конструктор из строки, содержащей Json-данные.
     explicit Json(const std::string &s);
 
@@ -40,8 +40,8 @@ private:
 
     explicit Json(const std::vector<std::any> &array) : _data(array) {}
 
-    explicit Json(const std::map<std::string, std::any> &object) 
-	    : _data(object) {}
+    explicit Json(const std::map<std::string, std::any> &object)
+    : _data(object) {}
 
     // Метод возвращает true, если данный экземпляр содержит в себе JSON-массив. Иначе false.
     bool is_array() const;
@@ -49,33 +49,38 @@ private:
     // Метод возвращает true, если данный экземпляр содержит в себе JSON-объект. Иначе false.
     bool is_object() const;
 
-    // Метод возвращает значение по ключу key, если экземпляр является JSON-объектом.
-    // Значение может иметь один из следующих типов: Json, std::string, double, bool или быть пустым.
+    // Метод возвращает значение по ключу key,
+    // если экземпляр является JSON-объектом.
+    // Значение может иметь один из следующих типов:
+    // Json, std::string, double, bool или быть пустым.
     // Если экземпляр является JSON-массивом, генерируется исключение.
     std::any &operator[](const std::string &key) {
         if (this->is_object()) {
-            auto &data = 
-		         std::any_cast<std::map<std::string, std::any> &>(_data);
+            auto &data =
+                    std::any_cast<std::map<std::string, std::any> &>(_data);
             return data[key];
         } else if (this->is_array()) {
             std::cout << "f";
         }
     }
 
-    // Метод возвращает значение по индексу index, если экземпляр является JSON-массивом.
-    // Значение может иметь один из следующих типов: Json, std::string, double, bool или быть пустым.
+    // Метод возвращает значение по индексу index,
+    // если экземпляр является JSON-массивом.
+    // Значение может иметь один из следующих типов:
+    // Json, std::string, double, bool или быть пустым.
     // Если экземпляр является JSON-объектом, генерируется исключение.
     std::any &operator[](int index) {
         if (this->is_array()) {
-            auto &data = 
-		         std::any_cast<std::vector<std::any> &>(_data);
+            auto &data =
+                    std::any_cast<std::vector<std::any> &>(_data);
             return data[index];
         } else if (this->is_object()) {
             throw std::bad_any_cast();
         }
     }
 
-    // Метод возвращает объект класса Json из строки, содержащей Json-данные.
+    // Метод возвращает объект класса Json из строки,
+    // содержащей Json-данные.
     static Json parse(const std::string &s) {
         try {
             return Json(s);
@@ -84,7 +89,8 @@ private:
         }
     }
 
-    // Метод возвращает объекта класса Json из файла, содержащего Json-данные в текстовом формате.
+    // Метод возвращает объекта класса Json из файла,
+    // содержащего Json-данные в текстовом формате.
     static Json parseFile(const std::string &path_to_file) {
         std::ifstream f(path_to_file);
         std::stringstream ss;

@@ -173,7 +173,8 @@ Json::Json(const std::string &s) {
         if (s[i] == '{') {
             i++;
             _data =
-                    std::any_cast<std::map<std::string, std::any>>(parse_object(s, i));
+                    std::any_cast<std::map<std::string, std::any>>
+                    (parse_object(s, i));
         } else if (s[i] == '[') {
             i++;
             _data =
@@ -186,12 +187,12 @@ Json::Json(const std::string &s) {
 
 bool Json::is_array() const {
     if (this->_data.type() !=
-                              typeid(std::vector<std::any>)) return false;
+    typeid(std::vector<std::any>)) return false;
 			      return true;
 			      }
 
 bool Json::is_object() const {
-    if (this->_data.type() != 
-                              typeid(std::map<std::string, std::any>)) return false;
-			      return true;
+    if (this->_data.type() !=
+    typeid(std::map<std::string, std::any>)) return false;
+    return true;
 			      }
