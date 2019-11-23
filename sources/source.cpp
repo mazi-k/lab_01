@@ -58,7 +58,7 @@ Json::parse_array(const std::string &str, size_t &pos) {
                 i++;
                 res.emplace_back(Json(parse_array(str, i)));
                 state = Act::find_comma_or_end;
-            }  //else throw std::bad_any_cast();
+            }
         } else if (str[i] == ']') {
             if (state == Act::find_comma_or_end) {
                 pos = i;
@@ -73,16 +73,16 @@ Json::parse_array(const std::string &str, size_t &pos) {
                 i++;
                 res.emplace_back(Json(parse_object(str, i)));
                 state = Act::find_comma_or_end;
-            }// else throw std::bad_any_cast();
+            }
         } else if (str[i] == '"') {
             if (state == Act::find_value) {
                 res.emplace_back(parse_string(str, i));
                 state = Act::find_comma_or_end;
-            } //else throw std::bad_any_cast();
+            }
         } else if (str[i] == ',') {
             if (state == Act::find_comma_or_end) {
                 state = Act::find_value;
-            }// else throw std::bad_any_cast();
+            }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
             if (str[i] == '+' && isdigit(str[i + 1]) != 0
 	     || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
@@ -97,7 +97,6 @@ Json::parse_array(const std::string &str, size_t &pos) {
                     state = Act::find_comma_or_end;
                 }
             }
-            //else throw std::bad_any_cast();
         }
     }
 }
@@ -117,17 +116,16 @@ Json::parse_object(const std::string &str, size_t &pos) {
                 res[key] = parse_string(str, i);
                 state = Act::find_comma_or_end;
             }
-            // else throw std::bad_any_cast();
         } else if (str[i] == ',') {
             if (state == Act::find_comma_or_end) {
                 state = Act::find_key_or_end;
-            }// else throw std::bad_any_cast();
+            }
         } else if (str[i] == '[') {
             if (state == Act::find_value) {
                 i++;
                 res[key] = Json(parse_array(str, i));
                 state = Act::find_comma_or_end;
-            } //else throw std::bad_any_cast();
+            }
         } else if (str[i] == '}') {
             if (state == Act::find_comma_or_end) {
                 pos = i;
@@ -146,11 +144,11 @@ Json::parse_object(const std::string &str, size_t &pos) {
                 i++;
                 res[key] = Json(parse_object(str, i));
                 state = Act::find_comma_or_end;
-            } //else throw std::bad_any_cast();
+            }
         } else if (str[i] == ':') {
             if (state == Act::find_colon) {
                 state = Act::find_value;
-            } //else throw std::bad_any_cast();
+            }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
             if (str[i] == '+' && isdigit(str[i + 1]) != 0
 	     || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
@@ -165,7 +163,6 @@ Json::parse_object(const std::string &str, size_t &pos) {
                     state = Act::find_comma_or_end;
                 }
             }
-            // else throw std::bad_any_cast();
         }
     }
 }
