@@ -1,3 +1,6 @@
+//
+// Created by mora on 12.09.2019.
+//
 #ifndef INCLUDE_HEADER_HPP_
 #define INCLUDE_HEADER_HPP_
 
@@ -11,7 +14,6 @@
 
 class Json {
 private:
-
     enum class Act {
         find_colon,
         find_value,
@@ -30,17 +32,18 @@ private:
     std::vector<std::any> parse_array(const std::string &str, size_t &pos);
 
     std::map<std::string, std::any>
-				    parse_object(const std::string &str, size_t &pos);
-
-public:
+	    parse_object(const std::string &str, size_t &pos);
+	
+	public:
     // Конструктор из строки, содержащей Json-данные.
-    Json(const std::string &s);
+    explicit Json(const std::string &s);
 
     Json() {}
 
-    Json(const std::vector<std::any> &array) : _data(array) {}
+    explicit Json(const std::vector<std::any> &array) : _data(array) {}
 
-    Json(const std::map<std::string, std::any> &object) : _data(object) {}
+    explicit Json(const std::map<std::string, std::any> &object) 
+	    : _data(object) {}
 
     // Метод возвращает true, если данный экземпляр содержит в себе JSON-массив. Иначе false.
     bool is_array() const;
@@ -53,8 +56,8 @@ public:
     // Если экземпляр является JSON-массивом, генерируется исключение.
     std::any &operator[](const std::string &key) {
         if (this->is_object()) {
-            auto &data =
-			 std::any_cast<std::map<std::string, std::any> &>(_data);
+            auto &data = 
+		         std::any_cast<std::map<std::string, std::any> &>(_data);
             return data[key];
         } else if (this->is_array()) {
             std::cout << "f";
@@ -66,8 +69,8 @@ public:
     // Если экземпляр является JSON-объектом, генерируется исключение.
     std::any &operator[](int index) {
         if (this->is_array()) {
-            auto &data =
-			 std::any_cast<std::vector<std::any> &>(_data);
+            auto &data = 
+		         std::any_cast<std::vector<std::any> &>(_data);
             return data[index];
         } else if (this->is_object()) {
             throw std::bad_any_cast();
