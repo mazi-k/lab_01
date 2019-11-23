@@ -62,7 +62,7 @@ public:
                     std::any_cast<std::map<std::string, std::any> &>(_data);
             return data[key];
         } else if (this->is_array()) {
-            std::cout << "f";
+            return null;
         }
     }
 
@@ -77,7 +77,7 @@ public:
                     std::any_cast<std::vector<std::any> &>(_data);
             return data[index];
         } else if (this->is_object()) {
-            throw std::bad_any_cast();
+            return null;
         }
     }
 
@@ -87,7 +87,7 @@ public:
         try {
             return Json(s);
         }catch(std::bad_any_cast()){
-            std::cout << "Error";
+            return null;
         }
     }
 
