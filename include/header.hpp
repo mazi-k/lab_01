@@ -17,7 +17,7 @@ private:
         find_value,
         find_key_or_end,
         find_comma_or_end
-    }
+    };
 
     double parse_number(const std::string &number, size_t &pos) const;
 
@@ -103,6 +103,6 @@ public:
 
 private:
     std::any _data;
-}
+};
 
 #endif // INCLUDE_HEADER_HPP_

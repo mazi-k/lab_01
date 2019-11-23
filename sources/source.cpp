@@ -30,7 +30,6 @@ std::string Json::parse_string(const std::string str, size_t &pos) const {
 
 bool Json::parse_bool(const std::string b, size_t &pos) const {
     std::string res;
-    bool result;
     while (b[pos] != 'e') {
         res.push_back(b[pos]);
         pos++;
@@ -84,8 +83,8 @@ Json::parse_array(const std::string &str, size_t &pos) {
                 state = Act::find_value;
             }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
-            if (str[i] == '+' && isdigit(str[i + 1]) != 0
-            || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
+            if ((str[i] == '+' && isdigit(str[i + 1]) != 0)
+            || (str[i] == '-' && isdigit(str[i + 1])) != 0) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res.emplace_back(parse_number(str, i));
@@ -150,8 +149,8 @@ Json::parse_object(const std::string &str, size_t &pos) {
                 state = Act::find_value;
             }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
-            if (str[i] == '+' && isdigit(str[i + 1]) != 0
-            || str[i] == '-' && isdigit(str[i + 1]) != 0) i++;
+            if ((str[i] == '+' && isdigit(str[i + 1]) != 0
+            || str[i] == '-' && isdigit(str[i + 1])) != 0) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res[key] = parse_number(str, i);
