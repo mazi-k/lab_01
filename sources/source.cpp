@@ -39,7 +39,9 @@ bool Json::parse_bool(const std::string b, size_t &pos) const {
         return false;
     } else if (res == "true") {
         return true;
-    }else return null;
+    }else {
+        return null;
+    }
 }
 
 void Json::skip(const std::string str, size_t &pos) {
