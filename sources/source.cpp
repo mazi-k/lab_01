@@ -188,11 +188,11 @@ Json::Json(const std::string &s) {
 bool Json::is_array() const {
     if (this->_data.type() !=
     typeid(std::vector<std::any>)) return false;
-			      return true;
-			      }
+    return true;
+}
 
 bool Json::is_object() const {
     if (this->_data.type() !=
     typeid(std::map<std::string, std::any>)) return false;
     return true;
-			      }
+}

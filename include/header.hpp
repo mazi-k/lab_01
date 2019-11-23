@@ -43,10 +43,12 @@ public:
     explicit Json(const std::map<std::string, std::any> &object)
     : _data(object) {}
 
-    // Метод возвращает true, если данный экземпляр содержит в себе JSON-массив. Иначе false.
+    // Метод возвращает true,
+    // если данный экземпляр содержит в себе JSON-массив. Иначе false.
     bool is_array() const;
 
-    // Метод возвращает true, если данный экземпляр содержит в себе JSON-объект. Иначе false.
+    // Метод возвращает true,
+    // если данный экземпляр содержит в себе JSON-объект. Иначе false.
     bool is_object() const;
 
     // Метод возвращает значение по ключу key,
