@@ -1,6 +1,6 @@
 // Copyright 2018 Your Name <your_email>
 
-#include "main.h"
+#include "header.hpp"
 
 double Json::parse_number(const std::string &number, size_t &pos) const {
     std::string res;
@@ -100,7 +100,7 @@ Json::parse_array(const std::string &str, size_t &pos) {
             }
         }
     }
-
+    continue;
 }
 
 std::map<std::string, std::any>
@@ -177,7 +177,7 @@ Json::Json(const std::string &s) {
             i++;
             _data =
                     std::any_cast<std::map<std::string, std::any>>
-                                                                (parse_object(s, i));
+                    (parse_object(s, i));
         } else if (s[i] == '[') {
             i++;
             _data =
