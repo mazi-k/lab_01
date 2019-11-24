@@ -1,6 +1,6 @@
 // Copyright 2018 Your Name <your_email>
 
-#include <header.hpp>
+#include "main.h"
 
 double Json::parse_number(const std::string &number, size_t &pos) const {
     std::string res;
@@ -40,7 +40,7 @@ bool Json::parse_bool(const std::string b, size_t &pos) const {
     } else if (res == "true") {
         return true;
     }else {
-        return null;
+        throw std::bad_any_cast();
     }
 }
 
@@ -86,7 +86,7 @@ Json::parse_array(const std::string &str, size_t &pos) {
             }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
             if ((str[i] == '+' && isdigit(str[i + 1]) != 0)
-            || (str[i] == '-' && isdigit(str[i + 1])) != 0) i++;
+                || (str[i] == '-' && isdigit(str[i + 1])) != 0) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res.emplace_back(parse_number(str, i));
@@ -100,7 +100,7 @@ Json::parse_array(const std::string &str, size_t &pos) {
             }
         }
     }
-    return 0;
+
 }
 
 std::map<std::string, std::any>
@@ -153,7 +153,7 @@ Json::parse_object(const std::string &str, size_t &pos) {
             }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
             if ((str[i] == '+' && isdigit(str[i + 1]) != 0
-            || str[i] == '-' && isdigit(str[i + 1])) != 0) i++;
+                 || str[i] == '-' && isdigit(str[i + 1])) != 0) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res[key] = parse_number(str, i);
@@ -167,6 +167,7 @@ Json::parse_object(const std::string &str, size_t &pos) {
             }
         }
     }
+    throw std::bad_any_cast();
 }
 //------------------------------------------------------------------------------------------------------------------
 
@@ -176,7 +177,7 @@ Json::Json(const std::string &s) {
             i++;
             _data =
                     std::any_cast<std::map<std::string, std::any>>
-                    (parse_object(s, i));
+                                                                (parse_object(s, i));
         } else if (s[i] == '[') {
             i++;
             _data =
@@ -189,12 +190,12 @@ Json::Json(const std::string &s) {
 
 bool Json::is_array() const {
     if (this->_data.type() !=
-    typeid(std::vector<std::any>)) return false;
+        typeid(std::vector<std::any>)) return false;
     return true;
 }
 
 bool Json::is_object() const {
     if (this->_data.type() !=
-    typeid(std::map<std::string, std::any>)) return false;
+        typeid(std::map<std::string, std::any>)) return false;
     return true;
 }

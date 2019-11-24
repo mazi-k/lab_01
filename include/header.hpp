@@ -30,7 +30,7 @@ private:
     std::vector<std::any> parse_array(const std::string &str, size_t &pos);
 
     std::map<std::string, std::any>
-            parse_object(const std::string &str, size_t &pos);
+    parse_object(const std::string &str, size_t &pos);
 
 public:
     // Конструктор из строки, содержащей Json-данные.
@@ -41,7 +41,7 @@ public:
     explicit Json(const std::vector<std::any> &array) : _data(array) {}
 
     explicit Json(const std::map<std::string, std::any> &object)
-    : _data(object) {}
+            : _data(object) {}
 
     // Метод возвращает true,
     // если данный экземпляр содержит в себе JSON-массив. Иначе false.
@@ -59,10 +59,10 @@ public:
     std::any &operator[](const std::string &key) {
         if (this->is_object()) {
             auto &data =
-                    std::any_cast<std::map<std::string, std::any> &>(_data);
+            std::any_cast<std::map<std::string, std::any> &>(_data);
             return data[key];
         } else if (this->is_array()) {
-            return null;
+            throw std::bad_any_cast();
         }
     }
 
@@ -77,7 +77,7 @@ public:
                     std::any_cast<std::vector<std::any> &>(_data);
             return data[index];
         } else if (this->is_object()) {
-            return null;
+            throw std::bad_any_cast();
         }
     }
 
@@ -86,8 +86,8 @@ public:
     static Json parse(const std::string &s) {
         try {
             return Json(s);
-        }catch(std::bad_any_cast()){
-            return null;
+        } catch (std::bad_any_cast()) {
+            std::cout << "This is not a Json-object or Json-array!" << std::endl;
         }
     }
 
