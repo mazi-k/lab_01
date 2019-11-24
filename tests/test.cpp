@@ -1,7 +1,7 @@
 // Copyright 2018 Your Name <your_email>
 
 #include <gtest/gtest.h>
-#include "main.h"
+#include "header.hpp"
 TEST(Parse, Text){
 std::string json = "{\n"
                    "    \"lastname\" : \"Ivanov\",\n"
