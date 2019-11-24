@@ -89,7 +89,7 @@ public:
         } catch (std::bad_any_cast()) {
             std::cout << "This is not a Json-object "
                          "or Json-array!" << std::endl;
-            return NULL;
+            return Json();
         }
     }
 
