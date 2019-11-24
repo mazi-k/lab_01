@@ -100,7 +100,6 @@ Json::parse_array(const std::string &str, size_t &pos) {
             }
         }
     }
-    continue;
 }
 
 std::map<std::string, std::any>
@@ -152,8 +151,8 @@ Json::parse_object(const std::string &str, size_t &pos) {
                 state = Act::find_value;
             }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
-            if ((str[i] == '+' && isdigit(str[i + 1])
-                 || str[i] == '-' && isdigit(str[i + 1]))) i++;
+            if ((str[i] == '+'|| str[i] == '-')
+                  && isdigit(str[i + 1])) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res[key] = parse_number(str, i);
