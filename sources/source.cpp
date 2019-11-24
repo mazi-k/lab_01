@@ -2,9 +2,9 @@
 
 #include "header.hpp"
 
-double Json::parse_number(const std::string &number, size_t &pos) const {
+int Json::parse_number(const std::string &number, size_t &pos) const {
     std::string res;
-    double result;
+    int result;
     while (number[pos] != ',') {
         if (number[pos] == ']') break;
         if (number[pos] == '}') break;

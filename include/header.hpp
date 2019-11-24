@@ -19,7 +19,7 @@ private:
         find_comma_or_end
     };
 
-    double parse_number(const std::string &number, size_t &pos) const;
+    int parse_number(const std::string &number, size_t &pos) const;
 
     bool parse_bool(const std::string b, size_t &pos) const;
 
