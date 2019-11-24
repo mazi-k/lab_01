@@ -61,7 +61,7 @@ public:
             auto &data =
             std::any_cast<std::map<std::string, std::any> &>(_data);
             return data[key];
-        } else if (this->is_array()) {
+        } else{
             throw std::bad_any_cast();
         }
     }
@@ -76,7 +76,7 @@ public:
             auto &data =
                     std::any_cast<std::vector<std::any> &>(_data);
             return data[index];
-        } else if (this->is_object()) {
+        } else {
             throw std::bad_any_cast();
         }
     }
@@ -89,6 +89,7 @@ public:
         } catch (std::bad_any_cast()) {
             std::cout << "This is not a Json-object "
                          "or Json-array!" << std::endl;
+            return NULL;
         }
     }
 

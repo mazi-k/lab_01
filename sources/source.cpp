@@ -52,7 +52,7 @@ std::vector<std::any>
 Json::parse_array(const std::string &str, size_t &pos) {
     std::vector<std::any> res;
     auto state = Act::find_value;
-    for (size_t i = pos; str[i] < str.length(); i++) {
+    for (size_t i = pos; i < str.length(); i++) {
         skip(str, i);
         if (str[i] == '[') {
             if (state == Act::find_value) {
@@ -152,8 +152,8 @@ Json::parse_object(const std::string &str, size_t &pos) {
                 state = Act::find_value;
             }
         } else if (isdigit(str[i]) || isalpha(str[i])) {
-            if ((str[i] == '+' && isdigit(str[i + 1]) != 0
-                 || str[i] == '-' && isdigit(str[i + 1])) != 0) i++;
+            if ((str[i] == '+' && isdigit(str[i + 1])
+                 || str[i] == '-' && isdigit(str[i + 1]))) i++;
             if (str[i] >= '0' && str[i] <= '9') {
                 if (state == Act::find_value) {
                     res[key] = parse_number(str, i);
