@@ -100,6 +100,8 @@ Json::parse_array(const std::string &str, size_t &pos) {
             }
         }
     }
+    res.clear();
+    return res;
 }
 
 std::map<std::string, std::any>
