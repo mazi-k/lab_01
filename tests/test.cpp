@@ -2,6 +2,13 @@
 
 #include <gtest/gtest.h>
 #include "header.hpp"
+#include <iostream>
+#include <string>
+#include <any>
+#include <map>
+#include <vector>
+#include <sstream>
+#include <fstream>
 
 TEST(Parse, Text
 ){
